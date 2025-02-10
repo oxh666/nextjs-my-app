@@ -1,3 +1,3 @@
 export default function Page() {
-  return <p>Inside Page</p>;
+  return <p>Settings Page</p>;
 }
