@@ -9,7 +9,7 @@ export default function DashboardPage(props: any) {
 
   return (
     <>
-     <EchartList className="w-full h-full" />
+     <EchartList />
     </>
   );
 }
