@@ -33,7 +33,7 @@ export default function RootLayout({
             }`}
             style={{ transition: 'background-color 0.3s ease, box-shadow 0.3s ease' }} // Ensure smooth transition for shadow
           >
-            <LayoutHeader />
+            <LayoutHeader  />
           </div>
           <div className='p-2'>
             {children}

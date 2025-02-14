@@ -5,6 +5,7 @@ import Image from 'next/image';
 import type { MenuProps } from 'antd';
 import { Menu, Avatar } from 'antd';
 import { usePathname } from 'next/navigation';
+import MusicPlayer from '../components/MusicPlayer';
 
 //这个文件
 export default function LayoutHeader(): JSX.Element {
@@ -29,6 +30,7 @@ export default function LayoutHeader(): JSX.Element {
         dashboard = '列表',
         echarts = '图表',
         blog = '博客',
+        photos = '照片',
     }
 
     const items: MenuItem[] = [
@@ -47,7 +49,10 @@ export default function LayoutHeader(): JSX.Element {
         {
             label: MenuEnum.blog,
             key: '/blog',
-
+        },
+        {
+            label: MenuEnum.photos,
+            key: '/photos',
         },
         {
             key: 'alipay',
@@ -83,7 +88,12 @@ export default function LayoutHeader(): JSX.Element {
     }
 
     function UserInfo(): JSX.Element {
-        return  <Avatar>O</Avatar>
+        return (
+            <>
+                <MusicPlayer />
+                <Avatar>O</Avatar>
+            </>
+        )
     }
     return (
         <header
