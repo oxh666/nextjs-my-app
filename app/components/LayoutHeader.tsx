@@ -3,12 +3,15 @@ import { useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import type { MenuProps } from 'antd';
-import { Menu, Avatar } from 'antd';
+import { Menu, Avatar, Button } from 'antd';
 import { usePathname } from 'next/navigation';
-import MusicPlayer from '../components/MusicPlayer';
-
+// import MusicPlayer from '../components/MusicPlayer';
+import { useUserInfoStore } from '../store';
+import { authAPI } from '@/lib/api';
+import { message } from 'antd';
 //这个文件
 export default function LayoutHeader(): JSX.Element {
+    const { isVisitor, setIsVisitor, userInfo, setUserInfo, logout } = useUserInfoStore();
     const [isStickyNavBar, setIsStickyNavBar] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const router = useRouter()
@@ -27,20 +30,16 @@ export default function LayoutHeader(): JSX.Element {
     type MenuItem = Required<MenuProps>['items'][number];
     enum MenuEnum {
         home = '首页',
-        dashboard = '列表',
         echarts = '图表',
         blog = '博客',
         photos = '照片',
+        vis='数据大屏',
     }
 
     const items: MenuItem[] = [
         {
             label: MenuEnum.home,
             key: '/',
-        },
-        {
-            label: MenuEnum.dashboard,
-            key: '/dashboard',
         },
         {
             label: MenuEnum.echarts,
@@ -53,6 +52,10 @@ export default function LayoutHeader(): JSX.Element {
         {
             label: MenuEnum.photos,
             key: '/photos',
+        },
+        {
+            label: MenuEnum.vis,
+            key: '/vis',
         },
         {
             key: 'alipay',
@@ -86,19 +89,47 @@ export default function LayoutHeader(): JSX.Element {
             mode="horizontal"
             items={items} />;
     }
+    function User(): JSX.Element {
+        return (
+            <>
+                <span>用户名</span>
+            </>
+        )
+    }
+    // 处理登出
+    const handleLogout = async () => {
+        try {
+            await authAPI.logout();
+            logout(); // 清除本地状态
+            message.success('登出成功');
+        } catch (error) {
+            console.error('登出失败:', error);
+            // 即使服务器登出失败，也清除本地状态
+            logout();
+            message.success('已登出');
+        }
+    };
 
     function UserInfo(): JSX.Element {
         return (
             <>
-                <MusicPlayer />
-                <Avatar>O</Avatar>
+                {/* <MusicPlayer /> */}
+                {/* <Avatar>O</Avatar> */}
+                {isVisitor ? (
+                    <Button onClick={() => setIsVisitor(false)}>登录</Button>
+                ) : (
+                    <div className="flex items-center gap-2">
+                        <span>欢迎，{userInfo?.name || '用户'}</span>
+                        <Button onClick={handleLogout}>登出</Button>
+                    </div>
+                )}
             </>
         )
     }
     return (
         <header
             className={` w-full font-customFont transition-all duration-300 ease-linear 
-                  ${isStickyNavBar ? 'sticky top-0 z-100' : ''
+                  ${isStickyNavBar ? 'sticky top-0 z-50' : ''
                 } ${isStickyNavBar && isScrolled
                     ? 'glass bg-gradient-to-r from-transparent via-white/10 to-transparent shadow-md'
                     : ''

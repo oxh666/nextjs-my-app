@@ -1,9 +1,14 @@
 'use client'
 import { inter } from '@/app/ui/fonts';
 import "./globals.css";
-import LayoutHeader from './componets/LayoutHeader';
+import LayoutHeader from './components/LayoutHeader';
+import LayoutFooter from './components/LayoutFooter';
 import React, { useState, useEffect } from 'react';
-
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import InitDialog from './components/InitDialog';
+import { useUserInfoStore } from './store';
+import zhCN from 'antd/locale/zh_CN'
+import { ConfigProvider } from 'antd';
 
 export default function RootLayout({
   children,
@@ -11,6 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { isVisitor, checkTokenAndSetVisitor } = useUserInfoStore();
+  
+  // 应用启动时检查 token
+  useEffect(() => {
+    checkTokenAndSetVisitor();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 只在组件挂载时执行一次，checkTokenAndSetVisitor 是稳定的
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,23 +38,32 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="h-full w-full bg-white text-slate-600 transition-colors dark:bg-theme-dark dark:text-slate-300">
-        <div
-            className={`m-auto flex h-fit flex-col items-center  ${
-              isScrolled ? 'sticky  top-0 z-5 backdrop-blur-md shadow-md' : ''
+      <ConfigProvider locale={zhCN}>
+        <AntdRegistry>
+        <div className="min-h-screen flex flex-col bg-white text-slate-600 transition-colors dark:bg-theme-dark dark:text-slate-300">
+          {/* Header */}
+          <div
+            className={`m-auto flex h-fit flex-col items-center w-full ${
+              isScrolled ? 'sticky top-0 z-50 backdrop-blur-md shadow-md' : ''
             }`}
-            style={{ transition: 'background-color 0.3s ease, box-shadow 0.3s ease' }} // Ensure smooth transition for shadow
+            style={{ transition: 'background-color 0.3s ease, box-shadow 0.3s ease' }}
           >
-            <LayoutHeader  />
+            <LayoutHeader />
+            {/* 如果用户是访客，则显示初始化对话框 */}
+            {isVisitor && <InitDialog />}
           </div>
-          <div className='p-2'>
+          
+          {/* Main Content */}
+          <main className="flex-1 p-2">
             {children}
-          </div>
-
+          </main>
+          
+          {/* Footer */}
+          <LayoutFooter />
         </div>
-
+        </AntdRegistry>
+        </ConfigProvider>
       </body>
     </html>
-
   );
 }

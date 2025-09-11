@@ -1,14 +1,19 @@
-import Link from "next/link";
+'use client'
 import { data } from "./data";
+import { Image } from 'antd';
 export default function PhotosPage() {
 
     return <div>
         <main className="flex flex-row flex-wrap">
-            {data.map(({ id, src }) => (
-                <Link href={`/photos/${id}`} key={id}>
-                        <img title={'可以点击，编号为'+id+"号图片"} src={src} alt={id} width={100} height={100} />
-                </Link>
-            ))}
+            <Image.PreviewGroup
+                preview={{
+                    onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
+                }}
+            >
+                {data.map(({ id, src }) => (
+                    <Image width={100} height={100} src={src} alt={id} key={id} />
+                ))}
+            </Image.PreviewGroup>
         </main>
     </div>;
 }

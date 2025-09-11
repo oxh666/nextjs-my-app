@@ -1,8 +1,7 @@
-'use client'
-import React, { useState } from 'react';
+import React from 'react';
 import EchartList from './components/EchartList';
 
-export default function DashboardPage(props: any) {
+export default function EchartsPage(props: any) {
   return (
     <>
      <EchartList />
