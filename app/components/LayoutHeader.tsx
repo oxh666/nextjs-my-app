@@ -5,7 +5,7 @@ import Image from 'next/image';
 import type { MenuProps } from 'antd';
 import { Menu, Avatar } from 'antd';
 import { usePathname } from 'next/navigation';
-import MusicPlayer from '../components/MusicPlayer';
+// import MusicPlayer from '../components/MusicPlayer';
 
 //这个文件
 export default function LayoutHeader(): JSX.Element {
@@ -98,7 +98,7 @@ export default function LayoutHeader(): JSX.Element {
     return (
         <header
             className={` w-full font-customFont transition-all duration-300 ease-linear 
-                  ${isStickyNavBar ? 'sticky top-0 z-100' : ''
+                  ${isStickyNavBar ? 'sticky top-0 z-50' : ''
                 } ${isStickyNavBar && isScrolled
                     ? 'glass bg-gradient-to-r from-transparent via-white/10 to-transparent shadow-md'
                     : ''
@@ -119,7 +119,7 @@ export default function LayoutHeader(): JSX.Element {
                     {/*导航栏*/}
                     <MenuNav />
                     {/*用户信息*/}
-                    <UserInfo />
+                    {/* <UserInfo /> */}
                 </div>
             </div>
         </header>
