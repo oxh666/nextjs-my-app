@@ -150,7 +150,7 @@ export default function LayoutHeader(): JSX.Element {
                     {/*导航栏*/}
                     <MenuNav />
                     {/*用户信息*/}
-                    <UserInfo />
+                    {/* <UserInfo /> */}
                 </div>
             </div>
         </header>

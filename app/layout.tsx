@@ -1,14 +1,14 @@
 'use client'
 import { inter } from '@/app/ui/fonts';
 import "./globals.css";
-import LayoutHeader from './components/LayoutHeader';
+import LayoutHeader from './componennts/LayoutHeader';
 import LayoutFooter from './components/LayoutFooter';
 import React, { useState, useEffect } from 'react';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import InitDialog from './components/InitDialog';
 import { useUserInfoStore } from './store';
 import zhCN from 'antd/locale/zh_CN'
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from 'antd';import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 export default function RootLayout({
   children,
@@ -40,11 +40,12 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
       <ConfigProvider locale={zhCN}>
         <AntdRegistry>
+        <AntdRegistry>
         <div className="min-h-screen flex flex-col bg-white text-slate-600 transition-colors dark:bg-theme-dark dark:text-slate-300">
           {/* Header */}
           <div
             className={`m-auto flex h-fit flex-col items-center w-full ${
-              isScrolled ? 'sticky top-0 z-50 backdrop-blur-md shadow-md' : ''
+              isScrolled ? 'sticky top-0 z-500 backdrop-blur-md shadow-md' : ''
             }`}
             style={{ transition: 'background-color 0.3s ease, box-shadow 0.3s ease' }}
           >
@@ -57,12 +58,11 @@ export default function RootLayout({
           <main className="flex-1 p-2">
             {children}
           </main>
-          
-          {/* Footer */}
+                    {/* Footer */}
           <LayoutFooter />
         </div>
         </AntdRegistry>
-        </ConfigProvider>
+        </ConfigProvider>        </AntdRegistry>
       </body>
     </html>
   );
