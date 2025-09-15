@@ -1,14 +1,14 @@
 'use client'
 import { inter } from '@/app/ui/fonts';
 import "./globals.css";
-import LayoutHeader from './componennts/LayoutHeader';
+import LayoutHeader from './components/LayoutHeader';
 import LayoutFooter from './components/LayoutFooter';
 import React, { useState, useEffect } from 'react';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import InitDialog from './components/InitDialog';
 import { useUserInfoStore } from './store';
 import zhCN from 'antd/locale/zh_CN'
-import { ConfigProvider } from 'antd';import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { ConfigProvider } from 'antd';
 
 export default function RootLayout({
   children,
@@ -40,7 +40,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
       <ConfigProvider locale={zhCN}>
         <AntdRegistry>
-        <AntdRegistry>
         <div className="min-h-screen flex flex-col bg-white text-slate-600 transition-colors dark:bg-theme-dark dark:text-slate-300">
           {/* Header */}
           <div
@@ -62,7 +61,7 @@ export default function RootLayout({
           <LayoutFooter />
         </div>
         </AntdRegistry>
-        </ConfigProvider>        </AntdRegistry>
+        </ConfigProvider>      
       </body>
     </html>
   );
